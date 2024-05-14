@@ -110,7 +110,7 @@ LDLIBDIRS = ./
 # Rules
 default: all
 
-all: $(TARGET) decoder
+all: $(TARGET) decoder encoder
 
 lib: $(TARGET)
 
