@@ -1,10 +1,10 @@
-FROM debian:bullseye as builder
+FROM alpine:latest as builder
 
-# use ustc debian mirror
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+# use ustc alpine mirror
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
 
-# install gcc
-RUN apt update && apt install -y gcc g++ make
+# install bash and build tools
+RUN apk update && apk add bash gcc g++ make
 
 WORKDIR /app
 
@@ -14,17 +14,17 @@ COPY converter_beta.sh .
 
 RUN bash converter.sh
 
-FROM debian:bullseye
+FROM alpine:latest
 
-# use ustc debian mirror
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+# use ustc alpine mirror
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
 
 # install lame
-RUN apt update && apt install -y lame
+RUN apk update && apk add lame
 
 WORKDIR /app
 
 COPY --from=builder /app/silk/encoder /usr/bin/silk-encoder
 COPY --from=builder /app/silk/decoder /usr/bin/silk-decoder
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/sh"]
