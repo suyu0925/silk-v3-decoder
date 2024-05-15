@@ -5,11 +5,14 @@ function print_usage {
   echo "   or: msg.amr [msg.mp3]"
 }
 
+# Replace file extension with .pcm
+function with_pcm_extension() {
+  echo "${1%.*}.pcm"
+}
+
 # Replace file extension with .mp3
 function with_mp3_extension() {
-  local filename="$1"
-  local filename_no_ext="${filename%.*}"
-  echo "$filename_no_ext.mp3"
+  echo "${1%.*}.mp3"
 }
 
 function convert_file {
@@ -21,14 +24,14 @@ function convert_file {
     output_file="$(with_mp3_extension $input_file)"
   fi
 
-  output_file_no_ext="${output_file%.*}"
+  middle_pcm_file="$(with_pcm_extension $input_file)"
 
   # Make sure the output directory exists
   mkdir -p "$(dirname $output_file)"
 
-  decoder "$input_file" "$output_file_no_ext.pcm" > /dev/null 2>&1 
-  ffmpeg -y -f s16le -ar 24000 -ac 1 -i "$output_file_no_ext.pcm" "$output_file" > /dev/null 2>&1 
-  rm "$output_file_no_ext.pcm"
+  decoder "$input_file" $middle_pcm_file > /dev/null 2>&1 
+  ffmpeg -y -f s16le -ar 24000 -ac 1 -i $middle_pcm_file "$output_file" > /dev/null 2>&1 
+  rm $middle_pcm_file
   # echo "Converted $input_file to $output_file"
 }
 
