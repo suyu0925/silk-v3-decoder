@@ -1,0 +1,6 @@
+# Common file types
+*.sh text executable
+
+# Set line endings for specific file types (optional)
+*.sh  eol=lf
+*.bat eol=crlf
