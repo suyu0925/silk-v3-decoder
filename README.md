@@ -120,11 +120,27 @@ sh converter.sh input ouput mp3
 
 ## docker
 
+### 使用
+
+**单个文件**
+
+转码当前目录下的单个文件为`.mp3`，文件名保持不变：
+
 ```sh
-docker run --rm -it -v ${pwd}:/app lckof/silk-v3-decoder:latest
+docker run -it --rm -v $(pwd):/app lckof/silk-v3-decoder msg_13141905142479bebcac2e0102.amr [102.mp3]
 ```
 
-### 使用
+**目录**
+
+递归遍历，转码指定目录下的所有`.amr`文件为`.mp3`，保持目录结构，输出到指定目录。
+
+如不指定输入目录，则默认为当前目录。
+
+如不指定输出目录，则默认输出到同输入目录。
+
+```sh
+docker run -it --rm -v $(pwd):/app lckof/silk-v3-decoder [.] [output]
+```
 
 ### 开发
 
