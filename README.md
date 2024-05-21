@@ -127,7 +127,7 @@ sh converter.sh input ouput mp3
 转码当前目录下的单个文件为`.mp3`，文件名保持不变：
 
 ```sh
-docker run -it --rm -v $(pwd):/app lckof/silk-v3-decoder msg_13141905142479bebcac2e0102.amr [102.mp3]
+docker run -it --rm -v ${pwd}:/app lckof/silk-v3-decoder msg_13141905142479bebcac2e0102.amr [102.mp3]
 ```
 
 **目录**
@@ -139,7 +139,7 @@ docker run -it --rm -v $(pwd):/app lckof/silk-v3-decoder msg_13141905142479bebca
 如不指定输出目录，则默认输出到同输入目录。
 
 ```sh
-docker run -it --rm -v $(pwd):/app lckof/silk-v3-decoder [.] [output]
+docker run -it --rm -v ${pwd}:/app lckof/silk-v3-decoder [.] [output]
 ```
 
 ### 开发
