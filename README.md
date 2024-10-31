@@ -122,12 +122,14 @@ sh converter.sh input ouput mp3
 
 ### 使用
 
+镜像会在`/app`目录下运行`convert.sh`脚本，所以将音频文件挂载到`/app/`的子目录下，比如`/app/voice`。注意不要直接挂卸在`/app`，会丢失`convert.sh`。
+
 **单个文件**
 
 转码当前目录下的单个文件为`.mp3`，文件名保持不变：
 
 ```sh
-docker run -it --rm -v ${pwd}:/app lckof/silk-v3-decoder msg_13141905142479bebcac2e0102.amr [102.mp3]
+docker run -it --rm -v ${pwd}:/app/voice lckof/silk-v3-decoder msg_13141905142479bebcac2e0102.amr [102.mp3]
 ```
 
 **目录**
@@ -139,7 +141,7 @@ docker run -it --rm -v ${pwd}:/app lckof/silk-v3-decoder msg_13141905142479bebca
 如不指定输出目录，则默认输出到同输入目录。
 
 ```sh
-docker run -it --rm -v ${pwd}:/app lckof/silk-v3-decoder [.] [output]
+docker run -it --rm -v ${pwd}:/app/voice lckof/silk-v3-decoder [.] [output]
 ```
 
 ### 开发
